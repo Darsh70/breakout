@@ -1,6 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dmnr50671ws5"]
+[gd_scene load_steps=9 format=3 uid="uid://dmnr50671ws5"]
 
-[ext_resource type="Script" uid="uid://chncogqaes3ae" path="res://player.gd" id="1_wtcfe"]
+[ext_resource type="Script" uid="uid://b4dpomfikfp1q" path="res://player.gd" id="1_wtcfe"]
+[ext_resource type="Script" uid="uid://b6iciw1ea32re" path="res://ball.gd" id="2_0e48y"]
+[ext_resource type="Script" uid="uid://dqtc1du2c8nog" path="res://block_manager.gd" id="3_epypp"]
+[ext_resource type="PackedScene" uid="uid://cdgy116bjfmqe" path="res://block.tscn" id="5_q6r6c"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0e48y"]
 size = Vector2(8, 648)
@@ -10,6 +13,9 @@ size = Vector2(1152, 17)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0hol4"]
 size = Vector2(162, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q6r6c"]
+size = Vector2(16, 16)
 
 [node name="Main" type="Node2D"]
 
@@ -29,7 +35,7 @@ shape = SubResource("RectangleShape2D_0e48y")
 position = Vector2(576, -8.5)
 shape = SubResource("RectangleShape2D_epypp")
 
-[node name="Player" type="CharacterBody2D" parent="."]
+[node name="Player" type="StaticBody2D" parent="."]
 script = ExtResource("1_wtcfe")
 metadata/_edit_group_ = true
 
@@ -51,3 +57,23 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+
+[node name="Ball" type="CharacterBody2D" parent="."]
+script = ExtResource("2_0e48y")
+metadata/_edit_group_ = true
+
+[node name="ColorRect" type="ColorRect" parent="Ball"]
+offset_left = 536.0
+offset_top = 496.0
+offset_right = 552.0
+offset_bottom = 512.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+position = Vector2(544, 504)
+shape = SubResource("RectangleShape2D_q6r6c")
+
+[node name="BlockManager" type="Node2D" parent="."]
+script = ExtResource("3_epypp")
+block_scene = ExtResource("5_q6r6c")
+
+[node name="Block" parent="." instance=ExtResource("5_q6r6c")]
