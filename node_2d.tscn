@@ -1,5 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://dmnr50671ws5"]
+[gd_scene load_steps=11 format=3 uid="uid://dmnr50671ws5"]
 
+[ext_resource type="Script" uid="uid://c83crewt6mef8" path="res://main.gd" id="1_q6r6c"]
 [ext_resource type="Script" uid="uid://b4dpomfikfp1q" path="res://player.gd" id="1_wtcfe"]
 [ext_resource type="Script" uid="uid://b6iciw1ea32re" path="res://ball.gd" id="2_0e48y"]
 [ext_resource type="Script" uid="uid://dqtc1du2c8nog" path="res://block_manager.gd" id="3_epypp"]
@@ -17,7 +18,11 @@ size = Vector2(162, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q6r6c"]
 size = Vector2(16, 16)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kdubu"]
+size = Vector2(1152, 64)
+
 [node name="Main" type="Node2D"]
+script = ExtResource("1_q6r6c")
 
 [node name="Walls" type="StaticBody2D" parent="."]
 
@@ -77,3 +82,54 @@ script = ExtResource("3_epypp")
 block_scene = ExtResource("5_q6r6c")
 
 [node name="Block" parent="." instance=ExtResource("5_q6r6c")]
+position = Vector2(0, -40)
+
+[node name="Score" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="Score"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -13.5
+offset_right = 13.5
+offset_bottom = 67.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 48
+text = "0"
+
+[node name="Label2" type="Label" parent="Score"]
+offset_right = 136.0
+offset_bottom = 96.0
+theme_override_font_sizes/font_size = 48
+text = "3"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="Score"]
+visible = false
+offset_left = 448.0
+offset_top = 232.0
+offset_right = 708.0
+offset_bottom = 299.0
+theme_override_font_sizes/font_size = 48
+text = "Game Over"
+
+[node name="Button" type="Button" parent="Score"]
+visible = false
+offset_left = 464.0
+offset_top = 448.0
+offset_right = 648.0
+offset_bottom = 528.0
+theme_override_font_sizes/font_size = 48
+text = "Retry"
+
+[node name="Death" type="Area2D" parent="."]
+position = Vector2(152, 184)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Death"]
+position = Vector2(424, 488)
+shape = SubResource("RectangleShape2D_kdubu")
+
+[connection signal="point" from="Ball" to="." method="_on_block_break_point"]
+[connection signal="pressed" from="Score/Button" to="." method="_on_retry_button_pressed"]
+[connection signal="body_entered" from="Death" to="." method="_on_death_body_entered"]
