@@ -26,7 +26,7 @@ func _physics_process(delta: float) -> void:
 			velocity = velocity.bounce(collision.get_normal())
 		
 		if collision.get_collider().is_in_group("blocks"):
-			speed += 100
+			speed += 50
 			velocity = velocity.normalized() * speed
 			collision.get_collider().destroy()
 			emit_signal("point")
